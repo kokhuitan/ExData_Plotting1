@@ -1,0 +1,17 @@
+plot4 <- function (file) {
+  data<-read.csv2(file)
+  data$Global_active_power<-as.numeric(as.character(data$Global_active_power))
+  data$Global_reactive_power<-as.numeric(as.character(data$Global_reactive_power))
+  data$Voltage<-as.numeric(as.character(data$Voltage))
+  data$Sub_metering_1<-as.numeric(as.character(data$Sub_metering_1))
+  data$Sub_metering_2<-as.numeric(as.character(data$Sub_metering_2))
+  data$Sub_metering_3<-as.numeric(as.character(data$Sub_metering_3))
+  dateTime <- as.POSIXlt(paste(as.Date(data$Date, format="%d/%m/%Y"), data$Time, sep=" "))
+  par(mfrow=c(2,2))
+  plot2(file)
+  plot(dateTime, data$Voltage, type="l", xlab="", ylab="Voltage")
+  plot3(file)
+  plot(dateTime, data$Global_reactive_power, type="l", xlab="", ylab="Global Reactive Power")  
+  dev.copy(png,'plot4.png')
+  dev.off()
+}
